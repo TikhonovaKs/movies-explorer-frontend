@@ -1,0 +1,130 @@
+.student__portfolio {
+  max-width: 1140px;
+  margin-top: 100px;
+  padding-bottom: 110px;
+}
+
+@media screen and (max-width: 768px) {
+  .student__portfolio {
+    margin-top: 90px;
+    padding-bottom: 71px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .student__portfolio {
+    margin-top: 70px;
+    padding-bottom: 51px;
+  }
+}
+
+.student__portfolio-title {
+  color: #8b8b8b;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 18px;
+  line-height: 20px;
+  margin-top: 0;
+  margin-bottom: 50px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 320px) {
+  .student__portfolio-title {
+    margin-bottom: 40px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.student__project-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.student__project {
+  list-style: none;
+  border-bottom: solid 1px #424242;
+  flex-shrink: 0;
+  height: 69px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.student__project:last-child {
+  border-bottom: none;
+}
+
+.student__project:first-child {
+  margin-top: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .student__project {
+    border-bottom: solid 1px #e6e6e6;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .student__project {
+    height: 47px;
+  }
+}
+
+.student__project-link {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  font-size: 30px;
+  line-height: 50px;
+  letter-spacing: -1.2px;
+}
+
+@media screen and (max-width: 768px) {
+  .student__project-link {
+    font-size: 28px;
+    line-height: 50px;
+    letter-spacing: -1.12px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .student__project-link {
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: -0.72px;
+  }
+}
+
+.student__arrow-button {
+  width: 29px;
+  height: 60px;
+  cursor: pointer;
+  background-image: url(../../images/student-arrow.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #202020;
+  padding: 0;
+  border: none;
+}
+
+@media screen and (max-width: 768px) {
+  .student__arrow-button {
+    width: 18px;
+    height: 28px;
+    align-self: center;
+    padding-bottom: 0px;
+    margin-bottom: 15px;
+    margin-right: 3px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .student__arrow-button {
+    background-size: 70%;
+  }
+}
