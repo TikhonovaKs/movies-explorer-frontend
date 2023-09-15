@@ -3,9 +3,9 @@ import './FilterCheckbox.css';
 
 function FilterCheckbox() {
   return (
-    <div class="search__toggle-container">
-      <button class="search__slider"></button>
-      <h5 class="search__toggle-name">Короткометражки</h5>
+    <div class="toggle">
+      <button class="toggle__slider"></button>
+      <h5 class="toggle__name">Короткометражки</h5>
     </div>
   );
 }

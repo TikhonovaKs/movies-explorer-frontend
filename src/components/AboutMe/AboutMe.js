@@ -6,10 +6,10 @@ import Portfolio from '../Portfolio/Portfolio.js';
 
 function AboutMe() {
   return (
-    <div className="student">
+    <section className="student">
       <BlockTitle title="Студент" />
       <div className="student__profile">
-        <section className="student__info">
+        <div className="student__info">
           <h2 className="student__name">Kseniia</h2>
           <h3 className="student__job">Frontend Developer</h3>
           <p className="student__about">
@@ -18,11 +18,11 @@ function AboutMe() {
             того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.
           </p>
           <a target="_blank" href="#" className="student__github">Github</a>
-        </section>
+        </div>
         <img className="student__image" src={myPhoto} alt="Фото студента" />
       </div>
       <Portfolio />
-    </div>
+    </section>
   );
 }
 

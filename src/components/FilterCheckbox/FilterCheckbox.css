@@ -1,4 +1,4 @@
-.search__toggle-container {
+.toggle {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -12,14 +12,14 @@
 }
 
 @media screen and (max-width: 768px) {
-  .search__toggle-container {
+  .toggle {
     margin-left: 30px;
     margin-right: 30px;
   }
 }
 
 @media screen and (max-width: 320px) {
-  .search__toggle-container {
+  .toggle {
     padding-bottom: 43px;
     margin-top: 44px;
     margin-left: 14px;
@@ -27,7 +27,7 @@
   }
 }
 
-.search__slider {
+.toggle__slider {
   width: 36px;
   height: 20px;
   cursor: pointer;
@@ -39,7 +39,7 @@
   border: none;
 }
 
-.search__toggle-name {
+.toggle__name {
   color: #fff;
   font-size: 12px;
   line-height: 18px;
@@ -50,7 +50,7 @@
 }
 
 @media screen and (max-width: 320px) {
-  .search__toggle-name {
+  .toggle__name {
     font-size: 11px;
     line-height: 18px;
   }

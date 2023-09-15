@@ -3,29 +3,33 @@ import './Portfolio.css';
 
 function Portfolio() {
   return (
-    <div className="student__portfolio">
+    <section className="student__portfolio">
       <h3 className="student__portfolio-title">Портфолио</h3>
       <ul className="student__project-list">
-        <li className="student__project">
-          <a href="#" className="student__project-link">
-            Статичный сайт
+        <li className="student__project-item">
+          <a href="https://github.com/TikhonovaKs/how-to-learn.git" className="student__project-link" target="_blank">
+            <span className="student__project-title">Статичный сайт</span>
+            <span className="student__project-icon"></span>
           </a>
-          <button className="student__arrow-button" aria-label="Переход на страницу проекта" type="button"></button>
         </li>
-        <li className="student__project">
-          <a href="#" className="student__project-link">
-            Адаптивный сайт
+        <li className="student__project-item">
+          <a href="https://github.com/TikhonovaKs/russian-travel.git" className="student__project-link" target="_blank">
+            <span className="student__project-title">Адаптивный сайт</span>
+            <span className="student__project-icon"></span>
           </a>
-          <button className="student__arrow-button" aria-label="Переход на страницу проекта" type="button"></button>
         </li>
-        <li className="student__project">
-          <a href="#" className="student__project-link">
-            Одностраничное приложение
+        <li className="student__project-item">
+          <a
+            href="https://github.com/TikhonovaKs/react-mesto-api-full-gha.git"
+            className="student__project-link"
+            target="_blank"
+          >
+            <span className="student__project-title">Одностраничное приложение</span>
+            <span className="student__project-icon"></span>
           </a>
-          <button className="student__arrow-button" aria-label="Переход на страницу проекта" type="button"></button>
         </li>
       </ul>
-    </div>
+    </section>
   );
 }
 export default Portfolio;

@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   background-color: #202020;
-  padding: 75px 70px 20px 70px;
+  padding: 79px 70px 20px 70px;
+  /* margin-top: 6.48vh; */
+  flex-shrink: 0;
 }
 
 @media screen and (max-width: 768px) {

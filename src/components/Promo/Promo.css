@@ -7,14 +7,14 @@
 
 @media screen and (max-width: 768px) {
   .promo {
-    padding-top: 224px;
+    padding-top: 220px;
     padding-bottom: 240px;
   }
 }
 
 @media screen and (max-width: 320px) {
   .promo {
-    padding-top: 142px;
+    padding-top: 140px;
     padding-bottom: 180px;
   }
 }

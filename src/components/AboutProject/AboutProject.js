@@ -4,9 +4,9 @@ import BlockTitle from '../BlockTitle/BlockTitle.js';
 
 function AboutProject() {
   return (
-    <div className="about">
+    <section className="about">
       <BlockTitle title="О проекте" />
-      <section className="about__info">
+      <div className="about__info">
         <div className="about__paragraph">
           <h3 className="about__title">Дипломный проект включал 5 этапов</h3>
           <p className="about__description">
@@ -19,14 +19,14 @@ function AboutProject() {
             У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.
           </p>
         </div>
-      </section>
-      <section className="about__terms">
-        <h4 className="about__weeks">1 неделя</h4>
-        <h4 className="about__weeks">4 недели</h4>
-        <h4 className="about__stage">Back-end</h4>
-        <h4 className="about__stage">Front-end</h4>
-      </section>
-    </div>
+      </div>
+      <div className="about__terms">
+        <div className="about__weeks">1 неделя</div>
+        <div className="about__weeks">4 недели</div>
+        <div className="about__stage">Back-end</div>
+        <div className="about__stage">Front-end</div>
+      </div>
+    </section>
   );
 }
 export default AboutProject;

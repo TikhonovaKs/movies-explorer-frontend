@@ -101,13 +101,13 @@
   gap: 0 0;
   align-items: center;
   margin-top: 110px;
-  padding-bottom: 96px;
+  padding-bottom: 90px;
 }
 
 @media screen and (max-width: 768px) {
   .about__terms {
     margin-top: 90px;
-    grid-template-columns: 140px 528px;
+    grid-template-columns: 1fr 3.77fr;
     padding-bottom: 80px;
     grid-template-rows: 40px 40px;
   }
