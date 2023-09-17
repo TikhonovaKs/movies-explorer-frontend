@@ -19,7 +19,7 @@
   align-items: center;
   max-width: 1140px;
   margin: 0 auto;
-  padding: 80px 70px 0 70px;
+  padding: 75px 70px 0 70px;
 }
 
 @media screen and (max-width: 768px) {
@@ -33,6 +33,7 @@
   .search__form {
     padding-left: 14px;
     padding-right: 14px;
+    padding-top: 78px;
   }
 }
 

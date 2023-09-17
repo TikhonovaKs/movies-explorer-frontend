@@ -9,7 +9,7 @@
   border-bottom: solid #dadada 1px;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 620px) {
   .block-title {
     font-size: 18px;
     letter-spacing: -0.72px;

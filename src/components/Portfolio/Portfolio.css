@@ -1,24 +1,24 @@
-.student__portfolio {
+.portfolio {
   max-width: 1140px;
   margin-top: 100px;
-  padding-bottom: 110px;
+  padding-bottom: 85px;
 }
 
 @media screen and (max-width: 768px) {
-  .student__portfolio {
+  .portfolio {
     margin-top: 90px;
-    padding-bottom: 71px;
+    padding-bottom: 50px;
   }
 }
 
 @media screen and (max-width: 320px) {
-  .student__portfolio {
-    margin-top: 65px;
-    padding-bottom: 51px;
+  .portfolio {
+    margin-top: 67px;
+    padding-bottom: 30px;
   }
 }
 
-.student__portfolio-title {
+.portfolio__title {
   color: #8b8b8b;
   font-feature-settings: 'clig' off, 'liga' off;
   font-size: 18px;
@@ -30,14 +30,14 @@
 }
 
 @media screen and (max-width: 320px) {
-  .student__portfolio-title {
+  .portfolio__title {
     font-size: 14px;
     line-height: 20px;
-    margin-bottom: 35px;
+    margin-bottom: 40px;
   }
 }
 
-.student__project-list {
+.project__list {
   display: flex;
   flex-direction: column;
   list-style: none;
@@ -45,28 +45,28 @@
   margin: 0;
 }
 
-.student__project-item {
+.portfolio__item {
   border-bottom: solid 1px #424242;
   margin-bottom: 20px;
 }
 
-.student__project-item:last-child {
+.portfolio__item:last-child {
   border-bottom: none;
 }
 
 @media screen and (max-width: 768px) {
-  .student__project-item {
+  .portfolio__item {
     border-bottom: solid 1px #e6e6e6;
   }
 }
 
 @media screen and (max-width: 320px) {
-  .student__project-item {
-    margin-bottom: 17px;
+  .portfolio__item {
+    margin-bottom: 20px;
   }
 }
 
-.student__project-link {
+.portfolio__project-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -77,28 +77,29 @@
 }
 
 @media screen and (max-width: 768px) {
-  .student__project-link {
-    padding-bottom: 18px;
+  .portfolio__project-link {
+    padding-bottom: 15px;
   }
 }
 
 @media screen and (max-width: 320px) {
-  .student__project-link {
-    padding-bottom: 13px;
+  .portfolio__project-link {
+    padding-bottom: 16px;
   }
 }
 
-.student__project-title {
+.portfolio__project-title {
   display: block;
   text-decoration: none;
   color: #fff;
   font-size: 30px;
   line-height: 50px;
   letter-spacing: -1.2px;
+  padding-bottom: 4px;
 }
 
 @media screen and (max-width: 768px) {
-  .student__project-title {
+  .portfolio__project-title {
     font-size: 28px;
     line-height: 50px;
     letter-spacing: -1.12px;
@@ -106,14 +107,14 @@
 }
 
 @media screen and (max-width: 520px) {
-  .student__project-title {
+  .portfolio__project-title {
     font-size: 18px;
     line-height: 28px;
     letter-spacing: -0.72px;
   }
 }
 
-.student__project-icon {
+.portfolio__project-icon {
   margin-left: auto;
   width: 29px;
   height: 60px;
@@ -127,7 +128,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .student__project-icon {
+  .portfolio__project-icon {
     width: 18px;
     height: 28px;
     align-self: center;
@@ -139,7 +140,8 @@
 }
 
 @media screen and (max-width: 320px) {
-  .student__project-icon {
-    background-size: 70%;
+  .portfolio__project-icon {
+    background-size: 60%;
+    padding-top: 0px;
   }
 }

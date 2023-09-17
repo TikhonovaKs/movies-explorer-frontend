@@ -4,7 +4,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 
 function SavedMovies() {
   return (
-    <div>
+    <div className='save-movies'>
       <SearchForm />
       <MoviesCardList />
     </div>

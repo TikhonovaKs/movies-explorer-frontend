@@ -1,5 +1,6 @@
 @import url(../src/vendor/normalize.css);
 @import url(../src/vendor/fonts/Inter-3.19/fonts.css);
+@import url(../src/components/Page/Page.css);
 @import url(../src/components/Main/Main.css);
 @import url(../src/components/Promo/Promo.css);
 @import url(../src/components/App/App.css);
@@ -25,6 +26,8 @@
 @import url(../src/components/Movies/Movies.css);
 @import url(../src/components/Preloader/Preloader.css);
 @import url(../src/components/NotFoundPage/NotFoundPage.css);
+@import url(../src/components/SavedMovies/SavedMovies.css);
+@import url(../src/components/ButtonSave/ButtonSave.css);
 
 
 

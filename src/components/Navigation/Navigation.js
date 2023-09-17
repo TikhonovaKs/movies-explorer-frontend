@@ -4,30 +4,24 @@ import './Navigation.css';
 
 function Navigation() {
   return (
-    <>
-      <ul className="movie__buttons-list">
-        <li className="movie__button-item">
-          <Link to="/movies">
-            <button className="movie__button-movies" aria-label="Редактирование профиля" type="button">
-              Фильмы
-            </button>
+    <div className="navigation">
+      <ul className="navigation__list">
+        <li className="navigation__item">
+          <Link to="/movies" className="navigation__button">
+            Фильмы
           </Link>
         </li>
-        <li className="movie__button-item">
-          <Link to="/saved-movies">
-            <button className="movie__button-movies" aria-label="Редактирование профиля" type="button">
-              Сохранённые фильмы
-            </button>
+        <li className="navigation__item">
+          <Link to="/saved-movies" className="navigation__button">
+            Сохранённые фильмы
           </Link>
         </li>
       </ul>
-      <Link to="/profile">
-        <a href="#" className="movie__account">
-          Аккаунт
-        </a>
+      <Link to="/profile" className="navigation__link">
+        <span className="navigation__account">Аккаунт</span>
       </Link>
-      <button className="movie__hidden-menu" aria-label="Drop down menu button" type="button"></button>
-    </>
+      <button className="navigation__hidden-menu" aria-label="Drop down menu button" type="button"></button>
+    </div>
   );
 }
 

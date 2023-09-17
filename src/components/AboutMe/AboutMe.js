@@ -17,9 +17,11 @@ function AboutMe() {
             музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ Контур». После
             того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.
           </p>
-          <a target="_blank" href="#" className="student__github">Github</a>
+          <a target="_blank" href="#" className="student__github">
+            Github
+          </a>
         </div>
-        <img className="student__image" src={myPhoto} alt="Фото студента" />
+        <img className="student__image" src={myPhoto} alt="Student photo" />
       </div>
       <Portfolio />
     </section>

@@ -5,7 +5,7 @@
   margin: 80px auto 0 auto;
   max-width: 1140px;
   padding: 0;
-  row-gap: 30px;
+  row-gap: 35px;
 }
 
 @media screen and (max-width: 1160px) {

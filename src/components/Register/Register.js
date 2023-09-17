@@ -1,12 +1,13 @@
 import React from 'react';
 import Authentication from '../Authentication/Authentication.js';
 import '../Authentication/Authentication.css';
+import ButtonSave from '../ButtonSave/ButtonSave.js';
 
 function Register() {
   return (
     <Authentication
       authenticationName="register"
-      authenticationTitle="Регистрация"
+      authenticationTitle="Добро пожаловать!"
       buttonName="Зарегестрироваться"
       authenticationQuestion="Уже зарегистрированы?"
       authenticationLink="Войти"
@@ -49,8 +50,9 @@ function Register() {
         minlength="2"
         maxlength="200"
       />
-      <span id="input-password-error" classNameName="error"></span>
+      <span id="input-password-error" className="error"></span>
       <h3 className="authentication__warning-text">Что-то пошло не так...</h3>
+      <ButtonSave buttonName="Зарегистрироваться" />
     </Authentication>
   );
 }

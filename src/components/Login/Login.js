@@ -1,6 +1,7 @@
 import React from 'react';
 import Authentication from '../Authentication/Authentication.js';
 import '../Authentication/Authentication.css';
+import ButtonSave from '../ButtonSave/ButtonSave.js';
 
 function Login() {
   return (
@@ -37,6 +38,7 @@ function Login() {
         maxlength="200"
       />
       <span id="input-email-error" className="error"></span>
+      <ButtonSave position="further" buttonName="Войти" />
     </Authentication>
   );
 }
