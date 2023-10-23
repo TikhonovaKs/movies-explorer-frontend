@@ -1,0 +1,57 @@
+.toggle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: 1140px;
+  border-bottom: 1px solid #424242;
+  padding-bottom: 39px;
+  margin: 30px auto 10px auto;
+  margin-left: 70px;
+  margin-right: 70px;
+}
+
+@media screen and (max-width: 768px) {
+  .toggle {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .toggle {
+    padding-bottom: 43px;
+    margin-top: 44px;
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+}
+
+.toggle__slider {
+  width: 36px;
+  height: 20px;
+  cursor: pointer;
+  background-image: url(../../images/smalltumb.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #202020;
+  padding: 0;
+  border: none;
+}
+
+.toggle__name {
+  color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  font-style: normal;
+  font-weight: 400;
+  margin: 0 0 0 12px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 320px) {
+  .toggle__name {
+    font-size: 11px;
+    line-height: 18px;
+  }
+}
