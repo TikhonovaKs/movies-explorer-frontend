@@ -84,3 +84,7 @@
   width: 22px;
   height: 22px;
 }
+
+.element__save-button_is-active {
+  background: url(../../images/save-checkbox-active.svg) center center no-repeat;
+}

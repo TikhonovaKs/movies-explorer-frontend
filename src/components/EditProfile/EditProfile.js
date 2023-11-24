@@ -4,21 +4,20 @@ import { Link } from 'react-router-dom';
 import '../Authentication/Authentication.css';
 import Logo from '../Logo/Logo.js';
 
-function Register({ handleRegister }) {
+function EditProfile({ onUpdateUser, errorMessage }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    reset, // сброс полей
+    reset,
     setError,
   } = useForm({
-    mode: 'onChange', // режим появления ошибок в полях (отслеживание по кажому введенному символу)
+    mode: 'onChange',
   });
 
-  // Обработчик изменения полей формы:
   const onSubmit = (data) => {
     console.log(data);
-    handleRegister(data, setError);
+    onUpdateUser(data, setError);
 
     reset();
   };
@@ -26,7 +25,7 @@ function Register({ handleRegister }) {
   return (
     <div className="authentication">
       <Logo position="center" />
-      <h2 className="authentication__title">Добро пожаловать!</h2>
+      <h2 className="authentication__title">Редактирование профиля</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="authentication__form" name="register" novalidate method="POST">
         <label className="authentication__label" for="input-name">
           name
@@ -56,8 +55,8 @@ function Register({ handleRegister }) {
           />
           {errors?.name && <div className="authentication__error">{errors.name.message}</div>}
         </div>
-        <label className="authentication__label" for="input-email">
-          email
+        <label className="authentication__label" for="input-name">
+          E-mail
         </label>
         <div class="authentication__input-container">
           <input
@@ -84,46 +83,22 @@ function Register({ handleRegister }) {
           />
           {errors?.email && <div className="authentication__error">{errors.email.message}</div>}
         </div>
-        <label className="authentication__label" for="input-password">
-          password
-        </label>
-        <div class="authentication__input-container">
-          <input
-            {...register('password', {
-              required: {
-                value: true,
-                message: 'Password is required!',
-              },
-              minLength: {
-                value: 2,
-                message: 'Minimum length is 2',
-              },
-              maxLength: {
-                value: 200,
-                message: 'Maximum length is 200',
-              },
-            })}
-            type="password"
-            className="authentication__input"
-          />
-          {errors?.password && <div className="authentication__error">{errors.password.message}</div>}
-        </div>
-
         <div className="authentication__button-container authentication__button-container_further">
-          {errors?.login?.servererror && <div className="authentication__error">{errors.login.servererror.message}</div>}
+          {errors?.login?.servererror && (
+            <div className="authentication__error">{errors.login.servererror.message}</div>
+          )}
           <button disabled={!isValid} type="submit" className="authentication__button" aria-label="Отправить результат">
-          Зарегестрироваться
+            Редактировать
           </button>
         </div>
-
       </form>
       <div className="authentication__links">
-        <p className="authentication__question">Уже зарегистрированы?</p>
-        <Link to="/signin">
-          <span className="authentication__link">Войти</span>
+        <p className="authentication__question">Передумали?</p>
+        <Link to="/profile">
+          <span className="authentication__link">Назад в профиль</span>
         </Link>
       </div>
     </div>
   );
 }
-export default Register;
+export default EditProfile;
