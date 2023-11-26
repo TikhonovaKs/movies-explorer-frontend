@@ -28,21 +28,20 @@ function MoviesCardList({ moviesList, savedMoviesList, path, handleSaveMovies })
     }
   };
   
+  const sourceMoviesList = 
+  path === '/movies'
+  ? moviesList
+  : savedMoviesList;
 
-  const cards =
-    path === '/movies'
-      ? moviesList
-          .slice(0, visibleMoviesFromList)
-          .map((movie) => <MoviesCard movie={movie} handleSaveMovies={handleSaveMovies} />)
-      : savedMoviesList
+  const cards = sourceMoviesList
           .slice(0, visibleMoviesFromList)
           .map((movie) => <MoviesCard movie={movie} handleSaveMovies={handleSaveMovies} />);
 
   // ...убираем видимость кнопки Еще
-  const isButtonHidden = visibleMoviesFromList >= moviesList.length;
+  const isButtonHidden = visibleMoviesFromList >= sourceMoviesList.length;
 
   // Если еще ни разу не искались фильмы
-  if (moviesList.length === 0) {
+  if (sourceMoviesList.length === 0) {
     return <p className="elements__error">Начните поиск фильмов</p>;
   }
 

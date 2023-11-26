@@ -1,7 +1,12 @@
+// import React from 'react';
 import React from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
+
 import * as auth from '../../utils/auth';
+
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+
 import './App.css';
 import Main from '../Main/Main.js';
 import Header from '../Header/Header';
@@ -18,17 +23,38 @@ import moviesApi from '../../utils/MoviesApi';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(localStorage.getItem('jwt') && true);
-  const [userData, setUserData] = React.useState({});
+  // const [userData, setUserData] = React.useState({});
 
   //  проверяем наличие токена в локальном хранилище:
+  // const checkToken = () => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     auth
+  //       .checkToken(jwt)
+  //       .then((user) => {
+  //         setUserData(user.data);
+  //         setLoggedIn(true);
+  //       })
+  //       .catch((err) => {
+  //         setLoggedIn(false);
+  //         console.log(err);
+  //       });
+  //   }
+  // };
+
+  const [currentUser, setCurrentUser] = React.useState({});
+
   const checkToken = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       auth
         .checkToken(jwt)
-        .then((user) => {
-          setUserData(user.data);
+        .then((res) => {
           setLoggedIn(true);
+          setCurrentUser({
+            name: res.data.name,
+            email: res.data.email
+          })
         })
         .catch((err) => {
           setLoggedIn(false);
@@ -36,6 +62,7 @@ function App() {
         });
     }
   };
+
   React.useEffect(() => {
     checkToken();
   }, []);
@@ -56,6 +83,10 @@ function App() {
           localStorage.setItem('jwt', data.token);
           mainApi.setJwt();
           setLoggedIn(true);
+          setCurrentUser({
+            name: data.name,
+            email: data.email,
+          });
           // checkToken();
           navigate('/movies');
         }
@@ -88,7 +119,11 @@ function App() {
     auth
       .editProfileInfo({ email, name, jwt })
       .then((userResponse) => {
-        setUserData(userResponse.user);
+        // setUserData(userResponse.user);
+        setCurrentUser({
+          name: userResponse.user.name,
+          email: userResponse.user.email,
+        });
         navigate('/profile');
       })
       .catch((err) => console.log(err));
@@ -126,97 +161,102 @@ function App() {
 
   return (
     <div className="app">
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <>
-              <Header backgroundName="green" />
-              <Main />
-              <Footer />
-            </>
-          }
-        ></Route>
-        <Route
-          exact
-          path="/movies"
-          element={
-            <ProtectedRoute
-              isLoggedIn={loggedIn}
-              element={
-                <>
-                  <Header backgroundName="grey" />
-                  <Movies allMoviesFromPublicApi={allMoviesFromPublicApi} path="/movies" />
-                  <Footer />
-                </>
-              }
-            />
-          }
-        ></Route>
-        <Route
-          exact
-          path="/saved-movies"
-          element={
-            <ProtectedRoute
-              isLoggedIn={loggedIn}
-              element={
-                <>
-                  <Header backgroundName="grey" />
-                  <Movies />
-                  <Footer />
-                </>
-              }
-            />
-          }
-        ></Route>
-        <Route
-          path="/signup"
-          element={
-            <>
-              <Register handleRegister={handleRegister} />
-            </>
-          }
-        ></Route>
-        <Route
-          path="/signin"
-          element={
-            <>
-              <Login handleLogin={handleLogin} />
-            </>
-          }
-        ></Route>
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute
-              isLoggedIn={loggedIn}
-              element={
-                <>
-                  <Header backgroundName="grey" />
-                  <Profile userData={userData} handleSignout={handleSignout} />
-                </>
-              }
-            />
-          }
-        ></Route>
-        <Route
-          path="/edit-profile"
-          element={
-            <>
-              <EditProfile onUpdateUser={handleUpdateUser} />
-            </>
-          }
-        ></Route>
-        <Route
-          path="/error"
-          element={
-            <>
-              <NotFoundPage />
-            </>
-          }
-        ></Route>
-      </Routes>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <>
+                <Header backgroundName="green" />
+                <Main />
+                <Footer />
+              </>
+            }
+          ></Route>
+          <Route
+            exact
+            path="/movies"
+            element={
+              <ProtectedRoute
+                isLoggedIn={loggedIn}
+                element={
+                  <>
+                    <Header backgroundName="grey" />
+                    <Movies allMoviesFromPublicApi={allMoviesFromPublicApi} path="/movies" />
+                    <Footer />
+                  </>
+                }
+              />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/saved-movies"
+            element={
+              <ProtectedRoute
+                isLoggedIn={loggedIn}
+                element={
+                  <>
+                    <Header backgroundName="grey" />
+                    <Movies />
+                    <Footer />
+                  </>
+                }
+              />
+            }
+          ></Route>
+          <Route
+            path="/signup"
+            element={
+              <>
+                <Register handleRegister={handleRegister} />
+              </>
+            }
+          ></Route>
+          <Route
+            path="/signin"
+            element={
+              <>
+                <Login handleLogin={handleLogin} />
+              </>
+            }
+          ></Route>
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute
+                isLoggedIn={loggedIn}
+                element={
+                  <>
+                    <Header backgroundName="grey" />
+                    <Profile
+                      // userData={userData}
+                      handleSignout={handleSignout}
+                    />
+                  </>
+                }
+              />
+            }
+          ></Route>
+          <Route
+            path="/edit-profile"
+            element={
+              <>
+                <EditProfile onUpdateUser={handleUpdateUser} />
+              </>
+            }
+          ></Route>
+          <Route
+            path="/error"
+            element={
+              <>
+                <NotFoundPage />
+              </>
+            }
+          ></Route>
+        </Routes>
+      </CurrentUserContext.Provider>
     </div>
   );
 }
