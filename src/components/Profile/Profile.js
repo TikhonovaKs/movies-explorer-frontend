@@ -5,7 +5,7 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 import './Profile.css';
 
-function Profile({ userData, handleSignout }) {
+function Profile({ handleSignout }) {
   const currentUser = useContext(CurrentUserContext);
 
   return (

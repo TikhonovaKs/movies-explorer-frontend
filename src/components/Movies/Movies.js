@@ -4,8 +4,11 @@ import './Movies.css';
 import '../SearchForm/SearchForm.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
+import ShortMoviesContext from '../../contexts/ShortMoviesContext';
 
 function Movies({ allMoviesFromPublicApi, path }) {
+  const [areShortMovies, setAreShortMovies] = React.useState(localStorage.getItem('isShortMoviesActive')==="true"??false);
+
   const initValueOfMoviesList = JSON.parse(localStorage.getItem('latestFilteredMovies'));
   const [originMovies, setOriginMovies] = React.useState([]);
   const [savedOriginMovies, setSavedOriginMovies] = React.useState([]);
@@ -13,15 +16,19 @@ function Movies({ allMoviesFromPublicApi, path }) {
   // стейт для хранения сохраненных фильмов:
   const [savedMoviesList, setSavedMoviesList] = React.useState([]);
 
-  //эффект обращения к mainApi за сохраненными фильмами:
+  // Эффект отображения фильмов на странице "Фильмы" и "Сохраненные фильмы"
   React.useEffect(() => {
     mainApi
       .getSavedMovies()
       .then((data) => {
+        // Перебираем полученные из БД сохраненные фильмы
         data.movie.forEach((item) => {
+          // Добавляем всем полученным фильмам из БД свойство isActive
           item.isActive = true;
+          // Сравниваем сохраненные фильмы по id с фильмами в основном списке (страница "Фильмы")
           const foundMovie = moviesList.find((movie) => movie.id === item.id);
           if (foundMovie) {
+            // Если фильм найден в основном списке, обновляем его состояние (отображаем зеленую кнопку - фильм сохранен)
             const updMoviesList = moviesList.map((p) => {
               if (p.id === foundMovie.id) {
                 p.isActive = true;
@@ -32,17 +39,21 @@ function Movies({ allMoviesFromPublicApi, path }) {
             setMoviesList(updMoviesList);
           }
         });
+        //обновляем состояние в сохраненном списке (страница "Сохраненные фильмы")
         setSavedMoviesList(data.movie);
-        setSavedOriginMovies(data.movie.map((p) => p));
+        setSavedOriginMovies(data.movie.map((p) => p)); //??
+        
       })
       .catch((err) => console.log(err));
   }, []);
+
 
   const handleSearch = (keyword, setError) => {
     if (path === '/movies') {
       const resultMovies = allMoviesFromPublicApi.filter((movie) =>
         movie.nameRU.toLowerCase().includes(keyword.toLowerCase())
       );
+      // Обновление состояния для найденных фильмов
       resultMovies.forEach((item) => {
         const foundMovie = savedOriginMovies.find((movie) => movie.id === item.id);
         if (foundMovie) {
@@ -65,14 +76,17 @@ function Movies({ allMoviesFromPublicApi, path }) {
   };
 
   const handleShortMovies = (isActive) => {
+    setAreShortMovies(isActive);
     if (isActive) {
       setOriginMovies(moviesList.map((p) => p));
       const filteredMovies = moviesList.filter((item) => item.duration < 40);
       setMoviesList(filteredMovies);
 
+      setSavedOriginMovies(savedMoviesList.map((p) => p));
       const filteredSavedMovies = savedMoviesList.filter((item) => item.duration < 40);
       setSavedMoviesList(filteredSavedMovies);
     } else {
+      // Восстановление оригинального списка фильмов (не короткометражки)
       setMoviesList(originMovies);
       setSavedMoviesList(savedOriginMovies);
     }
@@ -80,9 +94,10 @@ function Movies({ allMoviesFromPublicApi, path }) {
 
   const handleSaveMovies = (data, isActive) => {
     if (isActive) {
+      // Проверка, сохранен ли уже фильм
       const isMovieSaved = savedMoviesList.find((movie) => movie.id === data.id) !== undefined;
       if (isMovieSaved) {
-        return;
+        return; // Если фильм уже сохранен, ничего не делаем
       }
       mainApi.saveMovie({ ...data }).then(({ movie }) => {
         const newMovieItem = {
@@ -101,9 +116,11 @@ function Movies({ allMoviesFromPublicApi, path }) {
           _id: movie._id,
           isActive: true,
         };
+        // Обновление состояния сохраненных фильмов
         setSavedMoviesList([newMovieItem, ...savedMoviesList]);
         const foundMovie = moviesList.find((mv) => mv.id === movie.id);
         if (foundMovie) {
+          // Если фильм найден в основном списке, обновляем его состояние
           const updMoviesList = moviesList.map((p) => {
             if (p.id === foundMovie.id) {
               p.isActive = true;
@@ -119,10 +136,12 @@ function Movies({ allMoviesFromPublicApi, path }) {
       mainApi
         .deleteMovie(data._id)
         .then((data) => {
+          // Обновление состояния сохраненных фильмов после удаления
           const updatedMoviesList = savedMoviesList.filter((movie) => movie.id !== data.movie.id);
           setSavedMoviesList(updatedMoviesList);
           const foundMovie = moviesList.find((mv) => mv.id === data.movie.id);
           if (foundMovie) {
+            // Если фильм найден в основном списке, обновляем его состояние
             const updMoviesList = moviesList.map((p) => {
               if (p.id === foundMovie.id) {
                 p.isActive = false;
@@ -138,6 +157,7 @@ function Movies({ allMoviesFromPublicApi, path }) {
 
   return (
     <div className="movies">
+      <ShortMoviesContext.Provider value={areShortMovies}>
       <SearchForm handleSearch={handleSearch} handleShortMovies={handleShortMovies} />
       <MoviesCardList
         moviesList={moviesList}
@@ -145,6 +165,7 @@ function Movies({ allMoviesFromPublicApi, path }) {
         handleSaveMovies={handleSaveMovies}
         savedMoviesList={savedMoviesList}
       />
+      </ShortMoviesContext.Provider>
     </div>
   );
 }

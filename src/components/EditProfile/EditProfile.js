@@ -88,7 +88,7 @@ function EditProfile({ onUpdateUser, errorMessage }) {
             <div className="authentication__error">{errors.login.servererror.message}</div>
           )}
           <button disabled={!isValid} type="submit" className="authentication__button" aria-label="Отправить результат">
-            Редактировать
+            Сохранить
           </button>
         </div>
       </form>

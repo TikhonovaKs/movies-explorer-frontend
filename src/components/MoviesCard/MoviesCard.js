@@ -12,7 +12,7 @@ function MoviesCard({ movie, handleSaveMovies }) {
   return (
     <>
       <li className="element">
-      <a href={movie.trailerLink} target="_blank" rel="noopener noreferrer">
+      <a className='element__link' href={movie.trailerLink} target="_blank" rel="noopener noreferrer">
         <img className="element__image" src={movie.image} alt={movie.nameRU} />
       </a>
         <div className="element__description">

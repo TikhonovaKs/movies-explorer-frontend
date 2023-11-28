@@ -17,32 +17,17 @@ import Login from '../Login/Login.js';
 import Profile from '../Profile/Profile.js';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import EditProfile from '../EditProfile/EditProfile';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 import * as mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(localStorage.getItem('jwt') && true);
-  // const [userData, setUserData] = React.useState({});
-
-  //  проверяем наличие токена в локальном хранилище:
-  // const checkToken = () => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     auth
-  //       .checkToken(jwt)
-  //       .then((user) => {
-  //         setUserData(user.data);
-  //         setLoggedIn(true);
-  //       })
-  //       .catch((err) => {
-  //         setLoggedIn(false);
-  //         console.log(err);
-  //       });
-  //   }
-  // };
-
+  const [updatedUser, setUpdatedUser] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+   //switch state for InfoTooltip:
+   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
 
   const checkToken = () => {
     const jwt = localStorage.getItem('jwt');
@@ -119,14 +104,24 @@ function App() {
     auth
       .editProfileInfo({ email, name, jwt })
       .then((userResponse) => {
-        // setUserData(userResponse.user);
         setCurrentUser({
           name: userResponse.user.name,
           email: userResponse.user.email,
         });
+        setUpdatedUser(true);
         navigate('/profile');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setUpdatedUser(false);
+        console.log(err);
+      })
+      .finally(() => {
+        setIsInfoTooltipPopupOpen(true)
+      })
+  }
+
+  function closeAllPopups() {
+    setIsInfoTooltipPopupOpen(false);
   }
 
   const [allMoviesFromPublicApi, setAllMoviesFromPublicApi] = React.useState([]);
@@ -231,7 +226,6 @@ function App() {
                   <>
                     <Header backgroundName="grey" />
                     <Profile
-                      // userData={userData}
                       handleSignout={handleSignout}
                     />
                   </>
@@ -256,6 +250,7 @@ function App() {
             }
           ></Route>
         </Routes>
+        <InfoTooltip isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopups} updatedUser={updatedUser} />
       </CurrentUserContext.Provider>
     </div>
   );
