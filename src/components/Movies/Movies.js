@@ -7,13 +7,18 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 import ShortMoviesContext from '../../contexts/ShortMoviesContext';
 
 function Movies({ allMoviesFromPublicApi, path }) {
-  const [areShortMovies, setAreShortMovies] = React.useState(localStorage.getItem('isShortMoviesActive')==="true"??false);
+  const isShortMovie = (areShortSelected, movie) => {
+    if (!areShortSelected)
+      return true;
+    return movie.duration < 40;
+  };
+  const [areShortMovies, setAreShortMovies] = React.useState(localStorage.getItem('isShortMoviesActive') === "true" ?? false);
 
-  const initValueOfMoviesList = JSON.parse(localStorage.getItem('latestFilteredMovies'));
-  const [originMovies, setOriginMovies] = React.useState([]);
-  const [savedOriginMovies, setSavedOriginMovies] = React.useState([]);
-  const [moviesList, setMoviesList] = React.useState(initValueOfMoviesList ?? []); // ?? - проверяем на null
+  const initValueOfMoviesList = JSON.parse(localStorage.getItem('latestFilteredMovies'))?? [];
+  const [originMovies, setOriginMovies] = React.useState(initValueOfMoviesList);
+  const [moviesList, setMoviesList] = React.useState(initValueOfMoviesList.filter(p=>isShortMovie(areShortMovies, p))); // ?? - проверяем на null
   // стейт для хранения сохраненных фильмов:
+  const [savedOriginMovies, setSavedOriginMovies] = React.useState([]);
   const [savedMoviesList, setSavedMoviesList] = React.useState([]);
 
   // Эффект отображения фильмов на странице "Фильмы" и "Сохраненные фильмы"
@@ -40,9 +45,9 @@ function Movies({ allMoviesFromPublicApi, path }) {
           }
         });
         //обновляем состояние в сохраненном списке (страница "Сохраненные фильмы")
-        setSavedMoviesList(data.movie);
         setSavedOriginMovies(data.movie.map((p) => p)); //??
-        
+        setSavedMoviesList(data.movie.filter(p=>isShortMovie(areShortMovies, p)));
+
       })
       .catch((err) => console.log(err));
   }, []);
@@ -51,7 +56,7 @@ function Movies({ allMoviesFromPublicApi, path }) {
   const handleSearch = (keyword, setError) => {
     if (path === '/movies') {
       const resultMovies = allMoviesFromPublicApi.filter((movie) =>
-        movie.nameRU.toLowerCase().includes(keyword.toLowerCase())
+        movie.nameRU.toLowerCase().includes(keyword.toLowerCase())       
       );
       // Обновление состояния для найденных фильмов
       resultMovies.forEach((item) => {
@@ -63,13 +68,13 @@ function Movies({ allMoviesFromPublicApi, path }) {
           }
         }
       });
-      setMoviesList(resultMovies);
+      setMoviesList(resultMovies.filter(movie=> isShortMovie(areShortMovies, movie)));
 
       // Сохранить полученные фильмы в локал хранилище (только для поисковых фильмов)
       localStorage.setItem('latestFilteredMovies', JSON.stringify(resultMovies));
     } else {
       const resultMovies = keyword
-        ? savedMoviesList.filter((movie) => movie.nameRU.toLowerCase().includes(keyword.toLowerCase()))
+        ? savedMoviesList.filter((movie) => isShortMovie(areShortMovies,movie)&& movie.nameRU.toLowerCase().includes(keyword.toLowerCase()))
         : originMovies;
       setSavedMoviesList(resultMovies);
     }
@@ -79,11 +84,11 @@ function Movies({ allMoviesFromPublicApi, path }) {
     setAreShortMovies(isActive);
     if (isActive) {
       setOriginMovies(moviesList.map((p) => p));
-      const filteredMovies = moviesList.filter((item) => item.duration < 40);
+      const filteredMovies = moviesList.filter((item) => isShortMovie(isActive, item));
       setMoviesList(filteredMovies);
 
-      setSavedOriginMovies(savedMoviesList.map((p) => p));
-      const filteredSavedMovies = savedMoviesList.filter((item) => item.duration < 40);
+      // setSavedOriginMovies(savedMoviesList.map((p) => p));
+      const filteredSavedMovies = savedOriginMovies.filter((item) => isShortMovie(isActive, item));
       setSavedMoviesList(filteredSavedMovies);
     } else {
       // Восстановление оригинального списка фильмов (не короткометражки)
@@ -118,6 +123,7 @@ function Movies({ allMoviesFromPublicApi, path }) {
         };
         // Обновление состояния сохраненных фильмов
         setSavedMoviesList([newMovieItem, ...savedMoviesList]);
+        setSavedOriginMovies([newMovieItem, ...savedOriginMovies]);
         const foundMovie = moviesList.find((mv) => mv.id === movie.id);
         if (foundMovie) {
           // Если фильм найден в основном списке, обновляем его состояние
@@ -139,6 +145,10 @@ function Movies({ allMoviesFromPublicApi, path }) {
           // Обновление состояния сохраненных фильмов после удаления
           const updatedMoviesList = savedMoviesList.filter((movie) => movie.id !== data.movie.id);
           setSavedMoviesList(updatedMoviesList);
+
+          const updatedOriginSavedMoviesList = savedOriginMovies.filter((movie) => movie.id !== data.movie.id);
+          setSavedOriginMovies(updatedOriginSavedMoviesList);
+
           const foundMovie = moviesList.find((mv) => mv.id === data.movie.id);
           if (foundMovie) {
             // Если фильм найден в основном списке, обновляем его состояние
@@ -149,6 +159,14 @@ function Movies({ allMoviesFromPublicApi, path }) {
               return p;
             });
             setMoviesList(updMoviesList);
+
+            const updOriginMoviesList = originMovies.map((p) => {
+              if (p.id === foundMovie.id) {
+                p.isActive = false;
+              }
+              return p;
+            });
+            setOriginMovies(updOriginMoviesList);
           }
         })
         .catch((err) => console.log(err));
@@ -158,13 +176,13 @@ function Movies({ allMoviesFromPublicApi, path }) {
   return (
     <div className="movies">
       <ShortMoviesContext.Provider value={areShortMovies}>
-      <SearchForm handleSearch={handleSearch} handleShortMovies={handleShortMovies} />
-      <MoviesCardList
-        moviesList={moviesList}
-        path={path}
-        handleSaveMovies={handleSaveMovies}
-        savedMoviesList={savedMoviesList}
-      />
+        <SearchForm handleSearch={handleSearch} handleShortMovies={handleShortMovies} />
+        <MoviesCardList
+          moviesList={moviesList}
+          path={path}
+          handleSaveMovies={handleSaveMovies}
+          savedMoviesList={savedMoviesList}
+        />
       </ShortMoviesContext.Provider>
     </div>
   );
